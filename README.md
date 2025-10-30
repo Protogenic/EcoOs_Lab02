@@ -76,6 +76,8 @@ if (r2 == 0 && pIY != 0) {
 
 <img width="574" height="432" alt="image" src="https://github.com/user-attachments/assets/0e35981d-26ba-43b1-9d37-e1251bc04a8c" />
 
+<img width="332" height="135" alt="image" src="https://github.com/user-attachments/assets/b4899e40-7a56-46dc-9246-07707876e5e0" />
+
 
 
 
