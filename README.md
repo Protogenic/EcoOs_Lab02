@@ -30,8 +30,18 @@
 - Y: включение E → при недоступности E — включение D
 
 ## 4. Реализация (ключевые моменты)
-
-Инициализация зависимостей в `initCEcoLab1` (упрощенная схема):
+Регистрация компонентов:
+```c
+#ifdef ECO_LIB
+    pIBus->pVTbl->RegisterComponent(pIBus, &CID_EcoLab1, ...);
+    pIBus->pVTbl->RegisterComponent(pIBus, &CID_EcoCalculatorA, ...);
+    pIBus->pVTbl->RegisterComponent(pIBus, &CID_EcoCalculatorB, ...);
+    pIBus->pVTbl->RegisterComponent(pIBus, &CID_EcoCalculatorC, ...);
+    pIBus->pVTbl->RegisterComponent(pIBus, &CID_EcoCalculatorD, ...);
+    pIBus->pVTbl->RegisterComponent(pIBus, &CID_EcoCalculatorE, ...);
+#endi
+```
+Инициализация зависимостей:
 ```c
 // X: A (inclusion) → B (aggregation fallback)
 IEcoCalculatorX* pIX = 0;
@@ -60,18 +70,6 @@ if (r2 == 0 && pIY != 0) {
 }
 ```
 
-Выдача интерфейсов клиенту через `CEcoLab1::QueryInterface`:
-```c
-if (IsEqualUGUID(riid, &IID_IEcoCalculatorX)) { /* return m_pIX */ }
-if (IsEqualUGUID(riid, &IID_IEcoCalculatorY)) { /* return m_pIY */ }
-```
-
-Очистка в `deleteCEcoLab1`:
-```c
-if (pCMe->m_pIX) { pCMe->m_pIX->pVTbl->Release(pCMe->m_pIX); pCMe->m_pIX = 0; }
-if (pCMe->m_pIY) { pCMe->m_pIY->pVTbl->Release(pCMe->m_pIY); pCMe->m_pIY = 0; }
-```
-
 ## 5. Тестирование (UnitTest)
 
 После получения `IEcoLab1` клиент запрашивает X/Y и вызывает операции:
@@ -90,6 +88,7 @@ if (rqy == 0 && pIY) { printf("Y Multiplication(4,7) = %d\n", pIY->pVTbl->Multip
 ## 6. Вывод
 
 Реализована интеграция калькулятора в `CEcoLab1` с поддержкой двух техник — включение и агрегация. Клиент получает единообразный доступ к `IEcoCalculatorX`/`IEcoCalculatorY` через `QueryInterface` от `CEcoLab1`, при этом конкретные внутренние реализации подставляются динамически через InterfaceBus с учетом доступности компонент.
+
 
 
 
