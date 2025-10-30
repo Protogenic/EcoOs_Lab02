@@ -70,24 +70,12 @@ if (r2 == 0 && pIY != 0) {
 }
 ```
 
-## 5. Тестирование (UnitTest)
+## 5. Результаты
 
-После получения `IEcoLab1` клиент запрашивает X/Y и вызывает операции:
-```c
-IEcoCalculatorX* pIX = 0; IEcoCalculatorY* pIY = 0;
-int16_t rqx = pIEcoLab1->pVTbl->QueryInterface(pIEcoLab1, &IID_IEcoCalculatorX, (void**)&pIX);
-int16_t rqy = pIEcoLab1->pVTbl->QueryInterface(pIEcoLab1, &IID_IEcoCalculatorY, (void**)&pIY);
-if (rqx == 0 && pIX) { printf("X Addition(3,5) = %d\n", pIX->pVTbl->Addition(pIX, 3, 5)); pIX->pVTbl->Release(pIX);} 
-if (rqy == 0 && pIY) { printf("Y Multiplication(4,7) = %d\n", pIY->pVTbl->Multiplication(pIY, 4, 7)); pIY->pVTbl->Release(pIY);} 
-```
+<img width="556" height="566" alt="image" src="https://github.com/user-attachments/assets/df425de5-732b-433c-9de4-72b60bb22ba2" />
 
-Ожидаемое поведение:
-- При наличии DLL A/E — используются они; иначе X переключается на B (aggregation), Y — на D (inclusion).
-- Клиент всегда работает через `IEcoLab1` и `QueryInterface`.
+<img width="574" height="432" alt="image" src="https://github.com/user-attachments/assets/0e35981d-26ba-43b1-9d37-e1251bc04a8c" />
 
-## 6. Вывод
-
-Реализована интеграция калькулятора в `CEcoLab1` с поддержкой двух техник — включение и агрегация. Клиент получает единообразный доступ к `IEcoCalculatorX`/`IEcoCalculatorY` через `QueryInterface` от `CEcoLab1`, при этом конкретные внутренние реализации подставляются динамически через InterfaceBus с учетом доступности компонент.
 
 
 
